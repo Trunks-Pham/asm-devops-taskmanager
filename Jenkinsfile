@@ -90,23 +90,5 @@ pipeline {
         always {
             cleanWs()
         }
-
-        success {
-            sendTelegramMessage("✅ Build #${BUILD_NUMBER} was successful! ✅")
-        }
-
-        failure {
-            sendTelegramMessage("❌ Build #${BUILD_NUMBER} failed. ❌")
-        }
     }
-}
- 
-def sendTelegramMessage(String message = "") {
-    if (message.isEmpty()) {
-        error "Message cannot be empty"
-    }
-    def apiToken = System.getenv('TELEGRAM_API_TOKEN') 
-    def chatId = System.getenv('TELEGRAM_CHAT_ID') 
-    def curlCmd = "curl -s -X POST https://api.telegram.org/bot${apiToken}/sendMessage -d chat_id=${chatId} -d text=\"${message}\""
-    sh curlCmd
 }
